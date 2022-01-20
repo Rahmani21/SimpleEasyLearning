@@ -1,0 +1,40 @@
+{% extends '../base.html' %}
+{% block title %}Category{% endblock title %}
+{% block content %}
+<!-- {% if user.is_authenticated %} -->
+<h1 class="text-center my-5">{{category}}</h1>
+<ul>
+    
+    <div class="container my-5">
+        {% for post in category_post %}
+        <li class="list-group-item d-flex justify-content-between align-items-start">
+            <div class="ms-2 me-auto">
+                <small>
+                    
+                    <div><span class="fw-bold"><b><a href="{% url 'posts:details' post.pk %}">{{post.title}}</b></a></span> -
+                        {{post.post_date}} - 
+                        {{post.author.first_name}} - {{post.author.last_name}} - 
+                        {% if user.is_authenticated %}
+                        <a href="{% url 'posts:edit_post' post.pk %}">Edit</a> -
+                        <a href="{% url 'posts:delete_post' post.pk %}">Delete</a>
+                        {%endif%}
+                    </div>
+                </small>
+                
+                <p>{{post.description|truncatewords:30 | safe}}</p>
+                <div class="mt20">
+                    <a href="{% url 'posts:details' post.pk %}" class="btn btn-lght">Read More</a>
+                </div>
+            </div>
+            <!-- <span class="badge bg-primary rounded-pill">14</span> -->
+        </li>
+        
+        
+        {%endfor%}
+    </div>
+    
+</ul>
+<!-- {% else %}
+<h1 class="text-center my-5">Sorry! This page is not exist...</h1>
+{% endif %} -->
+{% endblock %}

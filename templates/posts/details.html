@@ -1,0 +1,20 @@
+{% extends '../base.html' %}
+{% block title %}{{post.title_tag}}{% endblock title %}
+{% block content %}
+<div class="container my-5">
+    <h1>{{post.title}}</h1>
+    <small>By: {{post.author.first_name}}
+        {{post.author.last_name}} -
+            {{post.post_date}} - 
+        <a href="{% url 'posts:edit_post' post.pk %}">Edit</a> - 
+        <a href="{% url 'posts:delete_post' post.pk %}">Delete</a>
+    
+    
+    </small>
+    <hr>
+    <br>
+    {{post.description | safe}}
+    <br>
+    <a href="{% url 'posts:home' %}" class='btn btn-light my-5'>Back</a>
+</div>
+{% endblock %}

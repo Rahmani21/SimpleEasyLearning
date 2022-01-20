@@ -1,0 +1,59 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="{% url 'posts:home' %}"><strong>Easy Learning</strong></a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="{% url 'posts:home' %}">Home <span class="sr-only">({{request.user}})</span></a>
+      </li>
+      {% comment %} we have have the category than do this {% endcomment %}
+      {% comment %} {% if  category_menu%} {% endcomment %}
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+        aria-expanded="false">
+        Categories
+      </a>
+      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+        {% for item in category_menu %}
+        <a class="dropdown-item" href="{% url 'posts:category' item|slugify %}">{{item}}</a>
+        {% endfor %}
+         
+      </div>
+    </li>
+    {% comment %} {% endif %} {% endcomment %}
+      {% if user.is_authenticated %}
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'posts:add_post' %}">Add Post</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'posts:add_category' %}">Add Category</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'members:logout' %}">Logout</a>
+      </li>
+      {% else %}
+      <li class="nav-item">
+        {% comment %} <a class="nav-link" href="{% url 'members:register' %}">Register</a> {% endcomment %}
+        <a class="nav-link" href="{% url 'members:register' %}">Register</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'members:login' %}">Login</a>
+      </li>
+     
+      
+      {% endif %}
+      <!-- <li class="nav-item">
+        <a class="nav-link disabled">Disabled</a>
+      </li> -->
+    </ul>
+    <!-- <form class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form> -->
+  </div>
+
+</nav>
