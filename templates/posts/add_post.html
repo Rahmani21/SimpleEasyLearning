@@ -6,14 +6,21 @@
 <h1 class="text-center my-5">Add Post</h1>
 <div class="container my-5 border">
     <br><br>
+    {% if user.is_authenticated %}
  <div class="form-group">
-
      <form action="" method="POST">
          {% csrf_token %}
+         {{form.media}}
          {{form.as_p}}
          <button class="btn btn-success">Save</button>
         </form>
-        
     </div>
+    <script>
+        var id = "{{ user.id }}" 
+        document.getElementById('userid').value = id
+    </script>
+    {% else %}
+    you are not allowed here
+    {% endif %}
 </div>
 {% endblock content %}

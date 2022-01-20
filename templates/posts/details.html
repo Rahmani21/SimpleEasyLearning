@@ -6,8 +6,12 @@
     <small>By: {{post.author.first_name}}
         {{post.author.last_name}} -
             {{post.post_date}} - 
-        <a href="{% url 'posts:edit_post' post.pk %}">Edit</a> - 
-        <a href="{% url 'posts:delete_post' post.pk %}">Delete</a>
+            {% if user.is_authenticated %}
+            {% if user.id == post.author.id%}
+            <a href="{% url 'posts:edit_post' post.pk %}">Edit</a> - 
+            <a href="{% url 'posts:delete_post' post.pk %}">Delete</a>
+            {% endif %}
+            {% endif %}
     
     
     </small>
@@ -16,5 +20,10 @@
     {{post.description | safe}}
     <br>
     <a href="{% url 'posts:home' %}" class='btn btn-light my-5'>Back</a>
+    <hr>
+    <form action="{% url 'posts:like_post' post.pk%}" method = 'POST'>
+        {% csrf_token %}
+        <button type="submit" name = 'post_id' value="{{post.id}}" class="btn btn-primary btn-sm">Like</button>
+    </form>
 </div>
 {% endblock %}

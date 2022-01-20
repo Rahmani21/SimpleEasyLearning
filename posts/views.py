@@ -1,3 +1,4 @@
+from ast import arg
 from audioop import reverse
 from dataclasses import fields
 from importlib.resources import path
@@ -7,9 +8,10 @@ from re import template
 from statistics import mode
 from types import CellType
 from unittest import mock
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from django.template import context
 from django.urls import reverse_lazy
+from django.http import HttpResponseRedirect
 from django.views.generic import (
     ListView,
     DetailView,
@@ -22,8 +24,12 @@ from .models import Category, Post
 # from posts.models import Post
 from .forms import PostForm,UpdateForm
 # Create your views here.
-
-
+def likeView(request,pk):
+    post = get_object_or_404(Post,id = request.POST.get('post_id'))
+    post.likes.add(request.user)
+    # return HttpResponseRedirect(reverse('posts:details',args = [str(pk)]))
+    # return redirect(reverse('posts:details',args = [(pk)]))
+    return redirect('posts/details.html',args = [(pk)])
 class HomeView(ListView):
     model = Post
     template_name = 'posts/home.html'

@@ -27,6 +27,9 @@
     {% comment %} {% endif %} {% endcomment %}
       {% if user.is_authenticated %}
       <li class="nav-item">
+        <a class="nav-link" href="{% url 'posts:home' %}">({{request.user}})</a>
+      </li>
+      <li class="nav-item">
         <a class="nav-link" href="{% url 'posts:add_post' %}">Add Post</a>
       </li>
       <li class="nav-item">

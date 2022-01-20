@@ -2,19 +2,23 @@
 {% block title %}Delete Post{% endblock title %}
 
 {% block content %}
+{% if user.id == post.author.id%}
 <h1 class="text-center my-5">Delete Post</h1>
 <div class="container my-5">
     <br><br>
     <div class="form-group">
-     <h3>{{post.title}}</h3>
-     <form action="" method="POST">
-         {% csrf_token %}
-         <br>
-         <strong>Are you sure?</strong>
-         <br><br>
-         <button class="btn btn-Danger ">Delete Post!</button>
+        <h3>{{post.title}}</h3>
+        <form action="" method="POST">
+            {% csrf_token %}
+            <br>
+            <strong>Are you sure?</strong>
+            <br><br>
+            <button class="btn btn-Danger ">Delete Post!</button>
         </form>
         
     </div>
+    {% else %}
+    <h1 class="text-center my-5">Delete Post</h1>
+    {% endif %}
 </div>
 {% endblock content %}

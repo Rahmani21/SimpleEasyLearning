@@ -20,25 +20,29 @@ for item in cats:
 class PostForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ('title','title_tag','author','category','description')
+        fields = ('title','title_tag','author','category','description','snippet')
+        
         widgets = {
             'title':forms.TextInput(attrs={'class':'form-control','placeholder':'Title'}),
             'title_tag':forms.TextInput(attrs={'class':'form-control'}),
-            'author':forms.Select(attrs={'class':'form-control'}),
+            'author':forms.TextInput(attrs={'class':'form-control', 'value':'','id':'userid','type':'hidden'}),
+            # 'author':forms.Select(attrs={'class':'form-control'}),
             'category':forms.Select(choices=choice_list,attrs={'class':'form-control'}),
             'description':forms.Textarea(attrs={'class':'form-control'}),
+            'snippet':forms.Textarea(attrs={'class':'form-control'}),
         }
 
 
 class UpdateForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ('title','title_tag','description')
+        fields = ('title','title_tag','description','snippet')
         widgets = {
             'title':forms.TextInput(attrs={'class':'form-control','placeholder':'Title'}),
             'title_tag':forms.TextInput(attrs={'class':'form-control'}),
             # 'author':forms.Select(attrs={'class':'form-control'}),
             'description':forms.Textarea(attrs={'class':'form-control'}),
+            'snippet':forms.Textarea(attrs={'class':'form-control'}),
         }
 
 

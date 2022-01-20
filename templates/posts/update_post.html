@@ -3,17 +3,23 @@
 
 {% block content %}
 
+{% if user.id == post.author.id%}
 <h1 class="text-center my-5">Update Post</h1>
 <div class="container my-5 border">
     <br><br>
- <div class="form-group">
-
-     <form action="" method="POST">
-         {% csrf_token %}
-         {{form.as_p}}
-         <button class="btn btn-success">Update</button>
+    <div class="form-group">
+        
+        <form action="" method="POST">
+            {% csrf_token %}
+            {{form.media}}
+            {{form.as_p}}
+            <button class="btn btn-success">Update</button>
         </form>
         
     </div>
 </div>
+{% else %}
+
+<h1 class="text-center my-5">You'r not allowed here</h1>
+{% endif %}
 {% endblock content %}
