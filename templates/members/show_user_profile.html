@@ -1,0 +1,53 @@
+{% extends '../base.html' %}
+{% block title %} User Profile{% endblock title %}
+{% load static %}
+{% block  content%}
+
+<div class="container my-5">
+    <h1 class="text-center">User Profile</h1>
+
+    <div class="card mb-3" >
+        <div class="row g-0">
+          <div class="col-md-2">
+            {% if user_page.profile_image.url %}
+            <span class="img-fluid">
+              <img src="{{user_page.profile_image.url}}" class="img-fluid"
+           alt="..."></span>
+           {% else %}
+           <span class="profile-image card-img">
+            <img src="{% static 'img/defualt-img.png' %}"
+         alt="..."></span>
+           {% endif %}  
+          </div>
+          <div class="col-md-10">
+            <div class="card-body">
+              <h5 class="card-title">
+                {{user_page.user.first_name}}
+                {{user_page.user.last_name}}
+              </h5>
+              <p class="small text-muted">
+                
+                
+                {% if user_page.website_url%}
+                <a href="{{user_page.website_url}}">Website</a> |
+                {% endif %}
+                {% if user_page.facebook_url%}
+                <a href="{{user_page.facebook_url}}">Facebook</a> |
+                {% endif %}
+                {% if user_page.twitter_url%}
+                <a href="{{post.author.profile.twitter_url}}">Twitter</a> |
+                {% endif %}
+                {% if user_page.instagram_url%}
+                <a href="{{user_page.instagram_url}}">Instagram</a> |
+                {% endif %}
+                {% if user_page.linkedin_url%}
+                <a href="{{user_page.linkedin_url}}">LinkedIn</a>
+                {% endif %}
+              </p>
+              <p class="card-text">{{user_page.bio}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+</div>
+{% endblock  %}

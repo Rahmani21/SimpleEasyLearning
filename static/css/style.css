@@ -1,0 +1,9 @@
+.container img{
+    width: 300px;
+    height: 200px;
+}
+
+span img.img-fluid{
+    width: 100px;
+    height: 100px;
+}

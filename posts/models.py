@@ -1,4 +1,6 @@
 from calendar import c
+from distutils.command.upload import upload
+from email.mime import image
 import imp
 from turtle import title
 from unicodedata import category
@@ -17,9 +19,20 @@ class Category(models.Model):
     def get_absolute_url(self):
         # return reverse("posts:details", args=(str(self.id)))
         return reverse("posts:home")
-
+class Profile(models.Model):
+    user = models.OneToOneField(User,null=True,on_delete=models.CASCADE )
+    bio = models.TextField()
+    profile_image = models.ImageField(blank = True, null = True, upload_to = 'profile/')
+    website_url = models.CharField(max_length=255,blank = True, null = True)
+    facebook_url = models.CharField(max_length=255,blank = True, null = True)
+    twitter_url= models.CharField(max_length=255,blank = True, null = True)
+    instagram_url = models.CharField(max_length=255,blank = True, null = True)
+    linkedin_url = models.CharField(max_length=255,blank = True, null = True)
+    def __str__(self):
+        return str(self.user)
 class Post(models.Model):
     title = models.CharField(max_length=255)
+    image = models.ImageField(blank = True, null = True, upload_to = 'media/')
     title_tag = models.CharField(max_length=255)
     author = models.ForeignKey(User,on_delete=models.CASCADE)
     # description = models.TextField()

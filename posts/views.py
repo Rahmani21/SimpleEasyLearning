@@ -1,6 +1,7 @@
 from ast import arg
 from audioop import reverse
 from dataclasses import fields
+from gc import get_objects
 from importlib.resources import path
 from operator import mod
 from pyexpat import model
@@ -26,10 +27,12 @@ from .forms import PostForm,UpdateForm
 # Create your views here.
 def likeView(request,pk):
     post = get_object_or_404(Post,id = request.POST.get('post_id'))
+    # post = get_objects(Post,id = request.POST.get('post_id'))
     post.likes.add(request.user)
-    # return HttpResponseRedirect(reverse('posts:details',args = [str(pk)]))
+    return HttpResponseRedirect(reverse('posts:details',args = [str(pk)]))
     # return redirect(reverse('posts:details',args = [(pk)]))
-    return redirect('posts/details.html',args = [(pk)])
+    # return redirect('posts/details.html',args = [(pk)])
+    # return redirect('posts:details')
 class HomeView(ListView):
     model = Post
     template_name = 'posts/home.html'

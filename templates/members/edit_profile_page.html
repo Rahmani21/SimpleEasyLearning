@@ -1,26 +1,26 @@
 {% extends '../base.html' %}
-{% block title %}Add Post{% endblock title %}
+{% block title %}Edit Profile Page{% endblock title %}
 
 {% block content %}
 
-<h1 class="text-center my-5">Add Post</h1>
+<h1 class="text-center my-5">Profile Page</h1>
 <div class="container my-5 border">
     <br><br>
     {% if user.is_authenticated %}
+    {% if user.id == profile.user.id %}
  <div class="form-group">
      <form action="" method="POST" enctype="multipart/form-data">
          {% csrf_token %}
-         {{form.media}}
+         
          {{form.as_p}}
-         <button class="btn btn-success">Save</button>
+         <button class="btn btn-success">Update</button>
         </form>
     </div>
-    <script>
-        var id = "{{ user.id }}" 
-        document.getElementById('userid').value = id
-    </script>
     {% else %}
-    you are not allowed here
+    You are not the correct user
+    {% endif %}
+    {% else %}
+    You're not allowed here!
     {% endif %}
 </div>
 {% endblock content %}

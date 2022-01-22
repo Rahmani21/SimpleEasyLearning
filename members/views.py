@@ -1,9 +1,44 @@
-from django.shortcuts import render,redirect
+from dataclasses import fields
+from posts.models import Profile
+from re import template
+from turtle import mode
+from unittest import mock
+from django.shortcuts import get_object_or_404, render,redirect
 from django.contrib.auth.models import User
 from django.contrib import messages
+from django.urls import reverse_lazy
+from django.views import generic
+from django.contrib.auth.views import PasswordChangeView
 from django.contrib.auth import authenticate,login,logout
+from django.contrib.auth.forms import PasswordChangeForm,UserChangeForm
+from .forms import EditProfileForm
 
 # Create your views here.
+
+class EditProfilePageView(generic.UpdateView):
+    model = Profile
+    template_name = 'members/edit_profile_page.html'
+    fields = [
+    'bio',
+    'profile_image',
+    'website_url',
+    'facebook_url',
+    'twitter_url',
+    'instagram_url',
+    'linkedin_url'
+    ]
+    success_url =  reverse_lazy('posts:home')
+
+
+class ShowProfilePageView(generic.DetailView):
+    model = Profile
+    template_name = 'members/show_user_profile.html'
+    def get_context_data(self,*args ,**kwargs):
+        context = super(ShowProfilePageView,self).get_context_data(*args,**kwargs)
+        user_page = get_object_or_404(Profile,id = self.kwargs['pk'])
+        context['user_page'] = user_page
+        return context
+
 def user_register(request):
     if request.method == 'POST':
         firstname = request.POST.get('firstname')
@@ -51,3 +86,15 @@ def user_logout(request):
     logout(request)
     return redirect("posts:home")
 
+
+
+class UserEditView(generic.UpdateView):
+    form_class = EditProfileForm
+    template_name = 'members/editprofile.html'
+    success_url = reverse_lazy('posts:home')
+    def get_object(self):
+        return self.request.user
+
+class PasswordChangeView(PasswordChangeView):
+    form_class = PasswordChangeForm
+    success_url =  reverse_lazy('posts:home')
