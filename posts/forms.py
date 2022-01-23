@@ -3,7 +3,7 @@ from pyexpat import model
 from random import choice
 from tkinter import Widget
 from django import forms
-from .models import Post,Category
+from .models import Comment, Post,Category
 
 # cats = [
 #     ('coding','coding'),
@@ -45,6 +45,18 @@ class UpdateForm(forms.ModelForm):
             # 'author':forms.Select(attrs={'class':'form-control'}),
             'description':forms.Textarea(attrs={'class':'form-control'}),
             'snippet':forms.Textarea(attrs={'class':'form-control'}),
+        }
+
+
+
+# Create form for Comments 
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ('name','description')
+        widgets = {
+            'name':forms.TextInput(attrs={'class':'form-control'}),
+            'description':forms.Textarea(attrs={'class':'form-control'}),  
         }
 
 

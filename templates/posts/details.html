@@ -32,12 +32,11 @@
     <button type="submit" name='post_id' value="{{post.id}}" class="btn btn-primary btn-sm">Like</button>
   </form>
   <br>
-  <br>
 
   <div class="card mb-3" >
     <div class="row g-0">
       <div class="col-md-2">
-        {% if post.author.profile.profile_image.url %}
+        {% if post.author.profile.profile_image %}
         <span >
           <img src="{{post.author.profile.profile_image.url}}" class="img-fluid"
        alt="..."></span>
@@ -49,11 +48,11 @@
       </div>
       <div class="col-md-10">
         <div class="card-body">
-          <h5 class="card-title">
+          <h5 class="card-title text-center">
             {{post.author.first_name}}
             {{post.author.last_name}}
           </h5>
-          <p class="small text-muted">
+          <p class="small text-muted text-center">
             
             <a href="{% url 'members:show_profile' post.author.profile.id %}">Profile Page</a> |
             {% if post.author.profile.website_url%}
@@ -72,12 +71,36 @@
             <a href="{{post.author.profile.linkedin_url}}">LinkedIn</a>
             {% endif %}
           </p>
-          <p class="card-text">{{post.author.profile.bio}}</p>
+          <p class="card-text text-center">{{post.author.profile.bio}}</p>
         </div>
       </div>
     </div>
   </div>
   <!-- <img src="/profile/{{post.profile_image}}" alt=""> -->
+
+
+  <h1>Comments</h1>
+  <br>
+  <!-- The Post and comments are connected through the foriegn key -->
+  {% if not post.comments.all %}
+  No Comments Yet <a href="{% url 'posts:add_comment' post.pk%}">Add One</a>
+  {% else %}
+  <a href="{% url 'posts:add_comment' post.pk%}">Add Comment</a>
+  {% for comment in post.comments.all  %}
+  <strong>  
+  <br>
+  {{comment.name}} -
+  {{comment.date_added}}
+</strong>
+<br>
+{{comment.description}}
+<br>
+  {% endfor %}
+  <a href="{% url 'posts:add_comment' post.pk%}">Add Comment</a>
+  {% endif %}
+  <br><br>
+  
+
 
 </div>
 {% endblock %}

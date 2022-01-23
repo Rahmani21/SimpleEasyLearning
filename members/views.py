@@ -7,15 +7,15 @@ from django.shortcuts import get_object_or_404, render,redirect
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.urls import reverse_lazy
-from django.views import generic
+from django.views.generic import UpdateView,DetailView,CreateView
 from django.contrib.auth.views import PasswordChangeView
 from django.contrib.auth import authenticate,login,logout
-from django.contrib.auth.forms import PasswordChangeForm,UserChangeForm
-from .forms import EditProfileForm
+from django.contrib.auth.forms import PasswordChangeForm
+from .forms import EditProfileForm,CreateUserProfileForm 
 
 # Create your views here.
 
-class EditProfilePageView(generic.UpdateView):
+class EditProfilePageView(UpdateView):
     model = Profile
     template_name = 'members/edit_profile_page.html'
     fields = [
@@ -30,7 +30,7 @@ class EditProfilePageView(generic.UpdateView):
     success_url =  reverse_lazy('posts:home')
 
 
-class ShowProfilePageView(generic.DetailView):
+class ShowProfilePageView(DetailView):
     model = Profile
     template_name = 'members/show_user_profile.html'
     def get_context_data(self,*args ,**kwargs):
@@ -88,7 +88,7 @@ def user_logout(request):
 
 
 
-class UserEditView(generic.UpdateView):
+class UserEditView(UpdateView):
     form_class = EditProfileForm
     template_name = 'members/editprofile.html'
     success_url = reverse_lazy('posts:home')
@@ -98,3 +98,13 @@ class UserEditView(generic.UpdateView):
 class PasswordChangeView(PasswordChangeView):
     form_class = PasswordChangeForm
     success_url =  reverse_lazy('posts:home')
+
+
+class CreateProfilePageView(CreateView):
+    model = Profile
+    form_class = CreateUserProfileForm
+    template_name = 'members/create_user_profle_page.html'
+    # take the user example 7 and put it in the form and save the form
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)

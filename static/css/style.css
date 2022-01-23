@@ -3,7 +3,21 @@
     height: 200px;
 }
 
-span img.img-fluid{
+/* /* span img.img-fluid{
     width: 100px;
     height: 100px;
+} */
+img{
+    width: 100px;
+    height: 100px;
+} 
+
+.navbar-brand{
+    color: white;
+}
+a.nav-link{
+    color: white
+}
+footer{
+    color: white;
 }

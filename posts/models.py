@@ -2,6 +2,7 @@ from calendar import c
 from distutils.command.upload import upload
 from email.mime import image
 import imp
+from pyexpat import model
 from turtle import title
 from unicodedata import category
 from django.db import models
@@ -30,6 +31,9 @@ class Profile(models.Model):
     linkedin_url = models.CharField(max_length=255,blank = True, null = True)
     def __str__(self):
         return str(self.user)
+
+    def get_absolute_url(self):
+        return reverse("posts:home")
 class Post(models.Model):
     title = models.CharField(max_length=255)
     image = models.ImageField(blank = True, null = True, upload_to = 'media/')
@@ -48,3 +52,13 @@ class Post(models.Model):
         # return reverse("posts:details", args=(str(self.id)))
         return reverse("posts:home")
     
+
+class Comment(models.Model):
+    post = models.ForeignKey(Post,related_name='comments',on_delete=models.CASCADE)
+    name = models.CharField(max_length=255)
+    description = models.TextField()
+    date_added = models.DateTimeField(auto_now_add=True)
+    
+
+    def __str__(self):
+        return '%s- %s' % (self.post.title,self.name)

@@ -20,10 +20,10 @@ from django.views.generic import (
     UpdateView,
     DeleteView
 )
-from .models import Category, Post
+from .models import Category, Post,Comment
 
 # from posts.models import Post
-from .forms import PostForm,UpdateForm
+from .forms import PostForm,UpdateForm,CommentForm
 # Create your views here.
 def likeView(request,pk):
     post = get_object_or_404(Post,id = request.POST.get('post_id'))
@@ -100,3 +100,17 @@ def categoryview(request,category):
 #     }
 #     return render(request,'posts/category_list.html',context)
 
+
+
+# "Adding Comment Section"
+
+class AddCommentView(CreateView):
+    model = Comment
+    form_class = CommentForm
+    template_name = "posts/add_comment.html"
+    def form_valid(self, form):
+        form.instance.post_id = self.kwargs['pk']
+        return super().form_valid(form)
+    success_url = reverse_lazy('posts:home')
+    
+    

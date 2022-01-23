@@ -1,4 +1,5 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+{% load static %}
+<nav class="navbar navbar-expand-lg text-light bg-dark">
   <a class="navbar-brand" href="{% url 'posts:home' %}"><strong>Easy Learning</strong></a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -27,7 +28,7 @@
     {% comment %} {% endif %} {% endcomment %}
       {% if user.is_authenticated %}
       <li class="nav-item">
-        <a class="nav-link" href="{% url 'posts:home' %}">({{request.user}})</a>
+        <a class="nav-link" href="{% url 'members:show_profile' user.profile.id %}">({{request.user}})</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="{% url 'posts:add_post' %}">Add Post</a>
@@ -49,7 +50,7 @@
         <a class="dropdown-item" href="{% url 'members:edit_profile_page' user.profile.id%}">Edit Profile Page</a>
         <a class="dropdown-item" href="{% url 'members:show_profile' user.profile.id %}">Show Profile Page</a>
         {% else %}
-        <a class="dropdown-item" href="#">Create Profile</a>
+        <a class="dropdown-item" href="{% url 'members:create_profile_page' %}">Create Profile</a>
         {% endif %}
 
        

@@ -9,23 +9,23 @@
     <div class="card mb-3" >
         <div class="row g-0">
           <div class="col-md-2">
-            {% if user_page.profile_image.url %}
-            <span class="img-fluid">
-              <img src="{{user_page.profile_image.url}}" class="img-fluid"
+            {% if user_page.profile_image%}
+            <span class="card-img">
+              <img src="{{user_page.profile_image.url}}" 
            alt="..."></span>
            {% else %}
-           <span class="profile-image card-img">
+           <span class="card-img">
             <img src="{% static 'img/defualt-img.png' %}"
          alt="..."></span>
            {% endif %}  
           </div>
           <div class="col-md-10">
             <div class="card-body">
-              <h5 class="card-title">
+              <h5 class="card-title text-center">
                 {{user_page.user.first_name}}
                 {{user_page.user.last_name}}
               </h5>
-              <p class="small text-muted">
+              <p class="small text-muted text-center">
                 
                 
                 {% if user_page.website_url%}
@@ -44,7 +44,7 @@
                 <a href="{{user_page.linkedin_url}}">LinkedIn</a>
                 {% endif %}
               </p>
-              <p class="card-text">{{user_page.bio}}</p>
+              <p class="card-text text-center">{{user_page.bio}}</p>
             </div>
           </div>
         </div>
