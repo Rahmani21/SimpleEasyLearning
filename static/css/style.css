@@ -21,3 +21,8 @@ a.nav-link{
 footer{
     color: white;
 }
+
+
+nav a.navbar-brand:hover{
+    color: white;
+}

@@ -4,7 +4,7 @@ Edit Profile
 {% endblock title %}
 
 {%block content%}
-
+{% if user.is_authenticated %}
 <h2 class="text-center my-5">Edit Settings</h2>
 <div class="container my-5 border">
     <div class="form-group">
@@ -16,4 +16,7 @@ Edit Profile
         </form>
     </div>
 </div>
+{% else %}
+<h1 class="text-center my-5">You are not allowed here!</h1>
+{% endif %}
 {%endblock content%}

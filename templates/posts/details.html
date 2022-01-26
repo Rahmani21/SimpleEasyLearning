@@ -27,16 +27,17 @@
   <br>
   <a href="{% url 'posts:home' %}" class='btn btn-light my-5'>Back</a>
   <hr>
-  <form action="{% url 'posts:like_post' post.pk%}" method='POST'>
+  {% comment %} <form action="{% url 'posts:like_post' post.pk%}" method='POST'>
     {% csrf_token %}
     <button type="submit" name='post_id' value="{{post.id}}" class="btn btn-primary btn-sm">Like</button>
-  </form>
+  </form> {% endcomment %}
   <br>
 
   <div class="card mb-3" >
     <div class="row g-0">
       <div class="col-md-2">
-        {% if post.author.profile.profile_image %}
+        {% if profile.profile_image %}
+        <!-- {% if post.author.profile.profile_image %} -->
         <span >
           <img src="{{post.author.profile.profile_image.url}}" class="img-fluid"
        alt="..."></span>

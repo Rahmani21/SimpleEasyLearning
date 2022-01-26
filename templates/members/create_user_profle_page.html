@@ -3,10 +3,10 @@
 
 {% block content %}
 
+{% if user.is_authenticated %}
 <h1 class="text-center my-5">Create Profile Page</h1>
 <div class="container my-5 border">
     <br><br>
-    {% if user.is_authenticated %}
  <div class="form-group">
      <form action="" method="POST" enctype="multipart/form-data">
          {% csrf_token %}
@@ -15,12 +15,12 @@
          <button class="btn btn-success">Create Profile</button>
         </form>
     </div>
-    <script>
+    {% comment %} <script>
         var id = "{{ user.id }}" 
         document.getElementById('userid').value = id
-    </script>
+    </script> {% endcomment %}
     {% else %}
-    you are not allowed here
+    <h1 class="text-center my-5">You are not allowed here!</h1>
     {% endif %}
 </div>
 {% endblock content %}

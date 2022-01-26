@@ -25,14 +25,20 @@ from .models import Category, Post,Comment
 # from posts.models import Post
 from .forms import PostForm,UpdateForm,CommentForm
 # Create your views here.
-def likeView(request,pk):
-    post = get_object_or_404(Post,id = request.POST.get('post_id'))
+
+# likes
+# def likeView(request,pk):
+    # post = get_object_or_404(Post,id = request.POST.get('post_id'))
     # post = get_objects(Post,id = request.POST.get('post_id'))
-    post.likes.add(request.user)
-    return HttpResponseRedirect(reverse('posts:details',args = [str(pk)]))
+    # post.likes.add(request.user)
+    # return HttpResponseRedirect(reverse('posts:details',args = [str(pk)]))
     # return redirect(reverse('posts:details',args = [(pk)]))
     # return redirect('posts/details.html',args = [(pk)])
     # return redirect('posts:details')
+
+
+
+    
 class HomeView(ListView):
     model = Post
     template_name = 'posts/home.html'
@@ -50,6 +56,11 @@ class HomeView(ListView):
 class DetailsVeiw(DetailView):
     model = Post
     template_name = 'posts/details.html'
+    def get_context_data(self,*args ,**kwargs):
+        category_menu = Category.objects.all()
+        context = super(DetailsVeiw,self).get_context_data(*args,**kwargs)
+        context['category_menu'] = category_menu
+        return context
 
 
 class AddPostView(CreateView):
@@ -57,6 +68,7 @@ class AddPostView(CreateView):
     form_class = PostForm
     template_name = "posts/add_post.html"
     # fields = "__all__"
+    # we cannot use the fields and form_class in the same class
 
     def get_context_data(self,*args ,**kwargs):
         category_menu = Category.objects.all()
@@ -69,18 +81,34 @@ class AddCategoryView(CreateView):
     # form_class = PostForm
     template_name = "posts/add_category.html"
     fields = "__all__"
+    def get_context_data(self,*args ,**kwargs):
+        category_menu = Category.objects.all()
+        context = super(AddCategoryView,self).get_context_data(*args,**kwargs)
+        context['category_menu'] = category_menu
+        return context
+    
 
 
 class UpdatePostView(UpdateView):
     model = Post
     form_class = UpdateForm
     template_name = 'posts/update_post.html'
+    def get_context_data(self,*args ,**kwargs):
+        category_menu = Category.objects.all()
+        context = super(UpdatePostView,self).get_context_data(*args,**kwargs)
+        context['category_menu'] = category_menu
+        return context
     
 
 class DeletePostView(DeleteView):
     model = Post
     template_name = "posts/delete.html"
     success_url = reverse_lazy('posts:home')
+    def get_context_data(self,*args ,**kwargs):
+        category_menu = Category.objects.all()
+        context = super(DeletePostView,self).get_context_data(*args,**kwargs)
+        context['category_menu'] = category_menu
+        return context
 
 
 

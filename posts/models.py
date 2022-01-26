@@ -29,8 +29,8 @@ class Profile(models.Model):
     twitter_url= models.CharField(max_length=255,blank = True, null = True)
     instagram_url = models.CharField(max_length=255,blank = True, null = True)
     linkedin_url = models.CharField(max_length=255,blank = True, null = True)
-    def __str__(self):
-        return str(self.user)
+    # def __str__(self):
+    #     return str(self.user)
 
     def get_absolute_url(self):
         return reverse("posts:home")
@@ -38,15 +38,15 @@ class Post(models.Model):
     title = models.CharField(max_length=255)
     image = models.ImageField(blank = True, null = True, upload_to = 'media/')
     title_tag = models.CharField(max_length=255)
-    author = models.ForeignKey(User,on_delete=models.CASCADE)
-    # description = models.TextField()
+    author = models.ForeignKey(User,on_delete=models.CASCADE) # ForeignKey means OneToMany
+    # description = models.TextField()  
     description = RichTextField(blank = True,null =True)
     post_date = models.DateField(auto_now_add=True)
     category = models.CharField(max_length=255,default='django')
     snippet = models.CharField(max_length=255)
     likes = models.ManyToManyField(User,related_name='blog_posts')
-    def __str__(self):
-        return str(self.id) + " | " + self.title + " | " + str(self.author)
+    # def __str__(self):
+    #     return str(self.id) + " | " + self.title + " | " + str(self.author)
 
     def get_absolute_url(self):
         # return reverse("posts:details", args=(str(self.id)))
@@ -60,5 +60,5 @@ class Comment(models.Model):
     date_added = models.DateTimeField(auto_now_add=True)
     
 
-    def __str__(self):
-        return '%s- %s' % (self.post.title,self.name)
+    # def __str__(self):
+    #     return '%s- %s' % (self.post.title,self.name)

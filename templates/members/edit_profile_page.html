@@ -2,12 +2,12 @@
 {% block title %}Edit Profile Page{% endblock title %}
 
 {% block content %}
+{% if user.is_authenticated %}
+{% if user.id == profile.user.id %}
 
 <h1 class="text-center my-5">Profile Page</h1>
 <div class="container my-5 border">
     <br><br>
-    {% if user.is_authenticated %}
-    {% if user.id == profile.user.id %}
  <div class="form-group">
      <form action="" method="POST" enctype="multipart/form-data">
          {% csrf_token %}
@@ -17,10 +17,10 @@
         </form>
     </div>
     {% else %}
-    You are not the correct user
+    <h1 class="text-center my-5"> You are not the correct user</h1>
     {% endif %}
     {% else %}
-    You're not allowed here!
+    <h1 class="text-center my-5">You are not allowed here!</h1>
     {% endif %}
 </div>
 {% endblock content %}

@@ -1,17 +1,18 @@
+from ast import arg
 from dataclasses import fields
-from posts.models import Profile
 from re import template
 from turtle import mode
 from unittest import mock
 from django.shortcuts import get_object_or_404, render,redirect
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User # For Regisrations
 from django.contrib import messages
 from django.urls import reverse_lazy
 from django.views.generic import UpdateView,DetailView,CreateView
 from django.contrib.auth.views import PasswordChangeView
-from django.contrib.auth import authenticate,login,logout
+from django.contrib.auth import authenticate,login,logout # For login and logout 
 from django.contrib.auth.forms import PasswordChangeForm
 from .forms import EditProfileForm,CreateUserProfileForm 
+from posts.models import Profile
 
 # Create your views here.
 
@@ -33,11 +34,18 @@ class EditProfilePageView(UpdateView):
 class ShowProfilePageView(DetailView):
     model = Profile
     template_name = 'members/show_user_profile.html'
+    # context_object_name = 'profile'
+    # pk_url_kwarg = 'id'
     def get_context_data(self,*args ,**kwargs):
-        context = super(ShowProfilePageView,self).get_context_data(*args,**kwargs)
         user_page = get_object_or_404(Profile,id = self.kwargs['pk'])
+        context = super(ShowProfilePageView,self).get_context_data(*args,**kwargs)
         context['user_page'] = user_page
         return context
+
+        # user_page = Profile.objects.all()
+        # context = super(ShowProfilePageView,self).get_context_data(*args,**kwargs)
+        # context['user_page'] = user_page
+        # return context
 
 def user_register(request):
     if request.method == 'POST':
@@ -95,6 +103,9 @@ class UserEditView(UpdateView):
     def get_object(self):
         return self.request.user
 
+    # def get_object(self):
+    #     return self.request.user we use when the object is not queryset
+
 class PasswordChangeView(PasswordChangeView):
     form_class = PasswordChangeForm
     success_url =  reverse_lazy('posts:home')
@@ -104,7 +115,8 @@ class CreateProfilePageView(CreateView):
     model = Profile
     form_class = CreateUserProfileForm
     template_name = 'members/create_user_profle_page.html'
-    # take the user example 7 and put it in the form and save the form
+    # take the user example 7 and put it in the form and save the form 
+    # or when the data has been posted
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)

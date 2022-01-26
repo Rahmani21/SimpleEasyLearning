@@ -2,7 +2,7 @@
 {% block title %}Add Category{% endblock title %}
 
 {% block content %}
-
+{% if user.is_authenticated %}
 <h1 class="text-center my-5">Add Category</h1>
 <div class="container my-5 border">
     <br><br>
@@ -15,5 +15,8 @@
         </form>
         
     </div>
+    {% else %}
+    <h1 class="text-center my-5">You are not allowed here!</h1>
+    {% endif %}
 </div>
 {% endblock content %}
